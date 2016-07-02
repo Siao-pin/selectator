@@ -166,17 +166,26 @@
 			//// ================== BIND ELEMENTS EVENTS ================== ////
 			// source element
 			$source_element.change(function () {
+				if (!options.keepOpen) {
+					$input_element.blur();
+					$input_element.trigger('blur');
+				}
 				regenerateChosenItems();
 			});
 			// container element
-			$container_element.on('focus', function (e) {
-				$input_element.focus();
-				$input_element.trigger('focus');
-			});
+			//$container_element.on('focus', function (e) {
+			//	$input_element.focus();
+			//	$input_element.trigger('focus');
+			//});
 			$container_element.on('mousedown', function (e) {
 				e.preventDefault();
-				$input_element.focus();
-				$input_element.trigger('focus');
+				if (!$input_element.is(':focus')) {
+					$input_element.focus();
+					$input_element.trigger('focus');
+				} else {
+					$input_element.blur();
+					$input_element.trigger('blur');
+				}
 				// put text caret to end of search field
 				if ($input_element[0].setSelectionRange) {
 					$input_element[0].setSelectionRange($input_element.val().length, $input_element.val().length);
@@ -190,10 +199,10 @@
 			});
 			$container_element.on('mouseup', function (e) {
 			});
-			$container_element.on('click', function (e) {
-				$input_element.focus();
-				$input_element.trigger('focus');
-			});
+			//$container_element.on('click', function (e) {
+			//	$input_element.focus();
+			//	$input_element.trigger('focus');
+			//});
 			$container_element.on('dblclick', function (e) {
 				$input_element.select();
 				$input_element.trigger('focus');
